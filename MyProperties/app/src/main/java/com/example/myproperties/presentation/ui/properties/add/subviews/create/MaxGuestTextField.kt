@@ -1,4 +1,4 @@
-package com.example.myproperties.presentation.ui.properties.detail.subviews
+package com.example.myproperties.presentation.ui.properties.add.subviews.create
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,16 +17,16 @@ import com.example.myproperties.R
 import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
 
 @Composable
-fun BedsTextField(addPropertyViewModel: AddPropertyViewModel) {
-    val bedsInProperty: String by addPropertyViewModel.bedsInProperty.observeAsState("")
+fun MaxGuestTextField(addPropertyViewModel: AddPropertyViewModel) {
+    val maxGuestsNumber: String by addPropertyViewModel.maxGuestsNumber.observeAsState("")
 
     OutlinedTextField(
-        value = bedsInProperty,
+        value = maxGuestsNumber,
         onValueChange = {
-            addPropertyViewModel.changeBedsNumber(it)
+            addPropertyViewModel.changeMaxGuestNumber(it)
         },
         label = {
-            Text(text = stringResource(id = R.string.beds_in_property))
+            Text(text = stringResource(id = R.string.guests_number))
         },
         modifier =
         Modifier

@@ -1,4 +1,4 @@
-package com.example.myproperties.presentation.ui.properties.detail.subviews
+package com.example.myproperties.presentation.ui.properties.add.subviews.create
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border

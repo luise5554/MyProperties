@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
@@ -21,6 +22,7 @@ import com.example.myproperties.presentation.ui.maps.MapView
 import com.example.myproperties.presentation.ui.maps.MapViewModel
 import com.example.myproperties.presentation.ui.properties.add.AddPropertyView
 import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
+import com.example.myproperties.presentation.ui.properties.add.subviews.photos.PhotoChooserView
 import com.example.myproperties.presentation.ui.properties.detail.PropertyDetailView
 import com.example.myproperties.presentation.ui.properties.detail.PropertyDetailViewModel
 import com.example.myproperties.presentation.ui.properties.list.PropertiesListView
@@ -47,35 +49,44 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            MyPropertiesTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
+            //mainView()
+            PhotoChooserView(5)
+        }
+    }
 
-                    val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = Routes.PropertyList.route){
+    @Composable
+    fun mainView(){
+        MyPropertiesTheme {
+            Surface(modifier = Modifier.fillMaxSize()) {
 
-                        composable(route = Routes.PropertyList.route) {
-                            PropertiesListView(modifier = Modifier.padding(10.dp), navController, propertiesListViewModel)
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = Routes.PropertyList.route){
+
+                    composable(route = Routes.PropertyList.route) {
+                        PropertiesListView(modifier = Modifier.padding(10.dp), navController, propertiesListViewModel)
+                    }
+
+                    composable(route = Routes.PropertyDetail.route,
+                        arguments = listOf(navArgument(name = Routes.PROPERTY_ID_KEY){
+                            type = NavType.StringType
                         }
-
-                        composable(route = Routes.PropertyDetail.route,
-                            arguments = listOf(navArgument(name = Routes.PROPERTY_ID_KEY){
-                                type = NavType.StringType
-                            }
                         )) { backStackEntry ->
-                            val propertyId = backStackEntry.arguments?.getString(Routes.PROPERTY_ID_KEY)
-                            PropertyDetailView(navController, propertyId ?: "", propertyDetailViewModel)
-                        }
+                        val propertyId = backStackEntry.arguments?.getString(Routes.PROPERTY_ID_KEY)
+                        PropertyDetailView(navController, propertyId ?: "", propertyDetailViewModel)
+                    }
 
-                        composable(route = Routes.AddProperty.route) {
-                            AddPropertyView(navController, addPropertyViewModel)
-                        }
+                    composable(route = Routes.AddProperty.route) {
+                        AddPropertyView(navController, addPropertyViewModel)
+                    }
 
-                        composable(route = Routes.Map.route) {
-                            MapView(mapViewModel, context = this@MainActivity, addPropertyViewModel)
-                        }
+                    composable(route = Routes.Map.route) {
+                        MapView(mapViewModel, context = this@MainActivity, addPropertyViewModel)
                     }
                 }
             }
         }
     }
+
 }
+
+

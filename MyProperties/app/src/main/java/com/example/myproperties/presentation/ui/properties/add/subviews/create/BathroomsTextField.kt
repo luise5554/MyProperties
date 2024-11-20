@@ -1,4 +1,4 @@
-package com.example.myproperties.presentation.ui.properties.detail.subviews
+package com.example.myproperties.presentation.ui.properties.add.subviews.create
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,29 +11,30 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.myproperties.R
 import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
 
 @Composable
-fun TitleTextField(addPropertyViewModel: AddPropertyViewModel) {
-    val title: String by addPropertyViewModel.title.observeAsState("")
+fun BathroomsTextField(addPropertyViewModel: AddPropertyViewModel) {
+    val bathroomsInProperty: String by addPropertyViewModel.bathroomsInProperty.observeAsState("")
 
     OutlinedTextField(
-        value = title,
+        value = bathroomsInProperty,
         onValueChange = {
-            addPropertyViewModel.changeTitle(it)
+            addPropertyViewModel.changeBathroomsNumber(it)
         },
         label = {
-            Text(text = stringResource(id = R.string.title))
+            Text(text = stringResource(id = R.string.bathrooms_in_property))
         },
         modifier =
         Modifier
             .padding(top = 20.dp, start = 20.dp, end = 20.dp)
             .fillMaxWidth(),
         keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Next
         )
-
     )
 }
