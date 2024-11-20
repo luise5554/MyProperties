@@ -11,4 +11,5 @@ sealed class Routes(val route:String) {
         fun createRoute(propertyId: String) = "PropertyDetail/$propertyId"
     }
     data object AddProperty: Routes(route = "AddProperty")
+    data object Map: Routes(route = "Map")
 }
