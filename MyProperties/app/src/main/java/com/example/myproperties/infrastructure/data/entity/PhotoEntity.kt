@@ -8,6 +8,7 @@ import com.example.myproperties.domain.model.PhotoModel
 data class PhotoEntity (
     @PrimaryKey
     val photoId: Int,
+    val propertyId: Int,
     val localPath: String,
     val photoDescription: String,
     val order: Int
@@ -16,6 +17,7 @@ data class PhotoEntity (
 fun PhotoEntity.toDomain(): PhotoModel{
     return PhotoModel(
         photoId = photoId,
+        propertyId = propertyId,
         localPath = localPath,
         photoDescription = photoDescription,
         order = order
@@ -25,6 +27,7 @@ fun PhotoEntity.toDomain(): PhotoModel{
 fun PhotoModel.toData(): PhotoEntity{
     return PhotoEntity(
         photoId = photoId,
+        propertyId = propertyId,
         localPath = localPath,
         photoDescription = photoDescription,
         order = order

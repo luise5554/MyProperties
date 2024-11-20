@@ -84,13 +84,13 @@ fun MapView(
                 DragState.START -> {}
                 DragState.END -> {
                     mapViewModel.changeUserSelectedLocation(markerState.position)
-                    addPropertyViewModel.updateLatLong(markerState.position)
                 }
             }
         }
 
         Button(
             onClick = {
+                mapViewModel.selectedLocation.value?.let { addPropertyViewModel.updateLatLong(it) }
                 navController.popBackStack()
             },
             modifier = Modifier
