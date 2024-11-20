@@ -26,6 +26,7 @@
     <string name="emtpy_property_beds_number">Debes ingresar el número de camas</string>
     <string name="emtpy_property_bathrooms_number">Debes ingresar el número de baños</string>
     <string name="emtpy_property_location">Debes ingresar la ubicación</string>
+    <string name="empty_or_no_enough_photo_list">Debes seleccionar al menos 5 fotos</string>
 
     <string name="success">La propiedad fue almacenada exitosamente</string>
 

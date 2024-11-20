@@ -49,8 +49,7 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            //mainView()
-            PhotoChooserView(5)
+            mainView()
         }
     }
 
@@ -80,7 +79,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(route = Routes.Map.route) {
-                        MapView(mapViewModel, context = this@MainActivity, addPropertyViewModel)
+                        MapView(mapViewModel, context = this@MainActivity, addPropertyViewModel, navController)
                     }
                 }
             }

@@ -4,19 +4,21 @@ import android.content.Context
 import com.example.myproperties.R
 import com.example.myproperties.domain.model.rules.PropertyInfoValidationModel
 import com.example.myproperties.domain.rules.PropertyInfoValidatorInterface
+import com.example.myproperties.presentation.ui.properties.add.subviews.photos.PhotoInViewModel
 
 class PropertyInfoValidator(val context: Context): PropertyInfoValidatorInterface {
 
     override fun validateInfo(
         propertyType: String?,
         propertyTypeName: String?,
-        maxGuestsNumber: String?,
+        maxGuestNumber: String?,
         bedsQuantity: String?,
         bathRoomsQuantity: String?,
         title: String?,
         description: String?,
         latitude: Double?,
-        longitude: Double?
+        longitude: Double?,
+        listPhotos: List<PhotoInViewModel>?
     ): PropertyInfoValidationModel {
 
         if (propertyType.isNullOrEmpty()){
@@ -35,7 +37,7 @@ class PropertyInfoValidator(val context: Context): PropertyInfoValidatorInterfac
             return PropertyInfoValidationModel.EMPTY_PROPERTY_TYPE_NAME
         }
 
-        if (maxGuestsNumber.isNullOrEmpty()){
+        if (maxGuestNumber.isNullOrEmpty()){
             return PropertyInfoValidationModel.EMPTY_MAX_GUESTS_NUMBER
         }
 
@@ -56,6 +58,10 @@ class PropertyInfoValidator(val context: Context): PropertyInfoValidatorInterfac
             return PropertyInfoValidationModel.EMPTY_LOCATION
         }
 
+        if (listPhotos.isNullOrEmpty()){
+            return PropertyInfoValidationModel.EMPTY_OR_NOT_ENOUGH_PHOTOS_LIST
+        }
+
         return PropertyInfoValidationModel.SUCCESS_VALIDATION
     }
 
@@ -70,6 +76,7 @@ class PropertyInfoValidator(val context: Context): PropertyInfoValidatorInterfac
             PropertyInfoValidationModel.EMPTY_BATHROOMS_NUMBER -> context.getString(R.string.emtpy_property_bathrooms_number)
             PropertyInfoValidationModel.EMPTY_LOCATION -> context.getString(R.string.emtpy_property_location)
             PropertyInfoValidationModel.SUCCESS_VALIDATION -> context.getString(R.string.success)
+            PropertyInfoValidationModel.EMPTY_OR_NOT_ENOUGH_PHOTOS_LIST -> context.getString(R.string.empty_or_no_enough_photo_list)
         }
     }
 

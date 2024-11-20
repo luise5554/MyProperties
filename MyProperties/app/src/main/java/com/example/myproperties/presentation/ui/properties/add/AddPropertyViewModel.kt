@@ -9,6 +9,7 @@ import com.example.myproperties.domain.model.PropertyModel
 import com.example.myproperties.domain.rules.NumberRuleValidatorInterface
 import com.example.myproperties.domain.rules.PropertyInfoValidatorInterface
 import com.example.myproperties.domain.usecases.AddPropertyUseCase
+import com.example.myproperties.presentation.ui.properties.add.subviews.photos.PhotoInViewModel
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -57,6 +58,9 @@ class AddPropertyViewModel @Inject constructor(
     private var _showError = MutableLiveData<Boolean>(false)
     val showError: LiveData<Boolean> = _showError
 
+    private var _photoList = MutableLiveData<List<PhotoInViewModel>>(emptyList())
+    var photoList: LiveData<List<PhotoInViewModel>> = _photoList
+
     fun updateLatLong(latLng: LatLng) {
         _latitude.value = latLng.latitude
         _longitude.value = latLng.longitude
@@ -104,6 +108,10 @@ class AddPropertyViewModel @Inject constructor(
         _showError.value = boolean
     }
 
+    fun updatePhotoList(photoList: List<PhotoInViewModel>) {
+        _photoList.value = photoList
+    }
+
     fun addProperty() {
 
         val validation = propertyInfoValidator.validateInfo(
@@ -115,7 +123,8 @@ class AddPropertyViewModel @Inject constructor(
             title = title.value,
             description = description.value,
             latitude = latitude.value,
-            longitude = longitude.value
+            longitude = longitude.value,
+            listPhotos = photoList.value
         )
 
         if (validation == PropertyInfoValidationModel.SUCCESS_VALIDATION){
@@ -128,7 +137,7 @@ class AddPropertyViewModel @Inject constructor(
                 title = title.value!!,
                 description = description.value!!,
                 latitude = latitude.value!!,
-                longitude = longitude.value!!
+                longitude = longitude.value!!,
             )
             viewModelScope.launch {
                 addPropertyUseCase(propertyModel = propertyModel)

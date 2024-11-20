@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyRow
@@ -23,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,33 +38,41 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
+import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
 
 @Composable
-fun PhotoChooserView(maxSelectionCount: Int = 1) {
-    var selectedImages by remember {
-        mutableStateOf<List<PhotoInViewModel>>(emptyList())
-    }
+fun PhotoChooserView(addPropertyViewModel: AddPropertyViewModel) {
+
+    val selectedImages: List<PhotoInViewModel> by addPropertyViewModel.photoList.observeAsState(
+        initial = emptyList()
+    )
 
     val multiplePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickMultipleVisualMedia(),
-        onResult = {  uris ->
+        onResult = { uris ->
             var count = 0
-            selectedImages = uris.map { uri ->
+            val newList = uris.map { uri ->
                 PhotoInViewModel(index = count++, uri = uri, localPath = "")
             }
-
+            addPropertyViewModel.updatePhotoList(newList)
         }
     )
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 20.dp, end = 20.dp, start = 20.dp)
+            .border(BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.onSurface)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = {
-            multiplePhotoPickerLauncher.launch(
-                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-            )
-        }) {
+        Button(
+            onClick = {
+                multiplePhotoPickerLauncher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            },
+            modifier = Modifier.padding(top = 10.dp)
+        ) {
             Text("Select photos")
         }
 
@@ -81,7 +91,8 @@ fun PhotoChooserView(maxSelectionCount: Int = 1) {
         }
 
         val onMove = { fromIndex: Int, toIndex: Int ->
-            selectedImages = selectedImages.toMutableList().apply { add(toIndex, removeAt(fromIndex)) }
+            addPropertyViewModel.updatePhotoList(
+                selectedImages.toMutableList().apply { add(toIndex, removeAt(fromIndex)) })
         }
 
         LazyRow(
@@ -146,7 +157,13 @@ fun PhotoChooserView(maxSelectionCount: Int = 1) {
 
             itemsIndexed(
                 items = selectedImages,
-                contentType = { index, itemT -> PhotoInViewModel(index = index, localPath = "", uri = itemT.uri) }) { index, item ->
+                contentType = { index, itemT ->
+                    PhotoInViewModel(
+                        index = index,
+                        localPath = "",
+                        uri = itemT.uri
+                    )
+                }) { index, item ->
                 val modifier = if (draggingItemIndex == index) {
                     Modifier
                         .zIndex(1f)
@@ -157,7 +174,9 @@ fun PhotoChooserView(maxSelectionCount: Int = 1) {
                     Modifier
                 }
                 Item(
-                    modifier = modifier.height(100.dp).width(100.dp),
+                    modifier = modifier
+                        .height(100.dp)
+                        .width(100.dp),
                     photoInViewModel = item,
                 )
             }

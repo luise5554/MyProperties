@@ -12,15 +12,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.NavHostController
 import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -37,7 +42,8 @@ import com.google.maps.android.compose.rememberMarkerState
 fun MapView(
     mapViewModel: MapViewModel,
     context: Context,
-    addPropertyViewModel: AddPropertyViewModel
+    addPropertyViewModel: AddPropertyViewModel,
+    navController: NavHostController
 ) {
 
     val selectedLocation: LatLng by mapViewModel.selectedLocation.observeAsState(LatLng(10.4048386, -75.5572455))
@@ -60,7 +66,7 @@ fun MapView(
         )
 
         GoogleMap(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.weight(1F),
             cameraPositionState = cameraPositionState
         ){
 
@@ -81,6 +87,17 @@ fun MapView(
                     addPropertyViewModel.updateLatLong(markerState.position)
                 }
             }
+        }
+
+        Button(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(10.dp)
+        ) {
+            Text(text = stringResource(id = com.example.myproperties.R.string.save))
         }
     }
 }

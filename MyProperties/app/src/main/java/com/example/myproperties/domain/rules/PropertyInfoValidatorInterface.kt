@@ -1,6 +1,7 @@
 package com.example.myproperties.domain.rules
 
 import com.example.myproperties.domain.model.rules.PropertyInfoValidationModel
+import com.example.myproperties.presentation.ui.properties.add.subviews.photos.PhotoInViewModel
 
 interface PropertyInfoValidatorInterface {
     fun validateInfo(
@@ -12,7 +13,8 @@ interface PropertyInfoValidatorInterface {
         title: String?,
         description: String?,
         latitude: Double?,
-        longitude: Double?
+        longitude: Double?,
+        listPhotos: List<PhotoInViewModel>?
     ): PropertyInfoValidationModel
 
     fun mapValidationToMessage(propertyInfoValidationModel: PropertyInfoValidationModel): String

@@ -25,6 +25,7 @@ import com.example.myproperties.presentation.ui.properties.add.subviews.create.M
 import com.example.myproperties.presentation.ui.properties.add.subviews.create.PreviewLocationView
 import com.example.myproperties.presentation.ui.properties.add.subviews.create.PropertyTypeField
 import com.example.myproperties.presentation.ui.properties.add.subviews.create.TitleTextField
+import com.example.myproperties.presentation.ui.properties.add.subviews.photos.PhotoChooserView
 
 @Composable
 fun AddPropertyView(navController: NavHostController, addPropertyViewModel: AddPropertyViewModel) {
@@ -62,6 +63,8 @@ fun AddPropertyView(navController: NavHostController, addPropertyViewModel: AddP
             navController = navController,
             addPropertyViewModel = addPropertyViewModel
         )
+
+        PhotoChooserView(addPropertyViewModel = addPropertyViewModel)
 
         Button(
             onClick = {

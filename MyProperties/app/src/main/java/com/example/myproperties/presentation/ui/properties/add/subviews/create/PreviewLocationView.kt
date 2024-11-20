@@ -62,7 +62,7 @@ fun PreviewLocationView(
                     },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
-                        .padding(top = 10.dp)
+                        .padding(top = 10.dp, bottom = 10.dp)
                 ) {
                     Text(text = stringResource(id = R.string.change_location))
                 }
