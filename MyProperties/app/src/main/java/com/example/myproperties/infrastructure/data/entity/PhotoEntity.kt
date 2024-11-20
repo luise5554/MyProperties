@@ -6,8 +6,8 @@ import com.example.myproperties.domain.model.PhotoModel
 
 @Entity
 data class PhotoEntity (
-    @PrimaryKey
-    val photoId: Int,
+    @PrimaryKey(autoGenerate = true)
+    val photoId: Int? = null,
     val propertyId: Int,
     val localPath: String,
     val photoDescription: String,
@@ -16,7 +16,7 @@ data class PhotoEntity (
 
 fun PhotoEntity.toDomain(): PhotoModel{
     return PhotoModel(
-        photoId = photoId,
+        photoId = photoId ?: 0,
         propertyId = propertyId,
         localPath = localPath,
         photoDescription = photoDescription,
@@ -26,7 +26,6 @@ fun PhotoEntity.toDomain(): PhotoModel{
 
 fun PhotoModel.toData(): PhotoEntity{
     return PhotoEntity(
-        photoId = photoId,
         propertyId = propertyId,
         localPath = localPath,
         photoDescription = photoDescription,

@@ -3,13 +3,16 @@ package com.example.myproperties.presentation.ui.properties.add
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.myproperties.domain.model.rules.PropertyInfoValidationModel
 import com.example.myproperties.domain.model.PropertyModel
 import com.example.myproperties.domain.rules.NumberRuleValidatorInterface
 import com.example.myproperties.domain.rules.PropertyInfoValidatorInterface
+import com.example.myproperties.domain.usecases.AddPhotosForPropertyUseCase
 import com.example.myproperties.domain.usecases.AddPropertyUseCase
 import com.example.myproperties.presentation.ui.properties.add.subviews.photos.PhotoInViewModel
+import com.example.myproperties.presentation.ui.properties.add.subviews.photos.toPhotoModel
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddPropertyViewModel @Inject constructor(
     private val addPropertyUseCase: AddPropertyUseCase,
+    private val addPhotosForPropertyUseCase: AddPhotosForPropertyUseCase,
     private val isNumberValidator: NumberRuleValidatorInterface,
     private val propertyInfoValidator: PropertyInfoValidatorInterface
 ) : ViewModel() {
@@ -141,6 +145,11 @@ class AddPropertyViewModel @Inject constructor(
             )
             viewModelScope.launch {
                 addPropertyUseCase(propertyModel = propertyModel)
+
+                val listPhotoModel = photoList.value!!.map { photoInViewModel ->
+                    photoInViewModel.toPhotoModel(propertyId= propertyModel.propertyId)
+                }
+                addPhotosForPropertyUseCase(listPhotoModel)
             }
         }else{
             _errorMessage.value = propertyInfoValidator.mapValidationToMessage(validation)

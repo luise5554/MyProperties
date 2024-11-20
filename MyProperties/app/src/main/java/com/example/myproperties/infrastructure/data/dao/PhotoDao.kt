@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PhotoDao {
 
-    @Query("Select * from PhotoEntity")
-    fun getPhotos(): Flow<List<PhotoEntity>>
+    @Query("Select * from PhotoEntity where propertyId = :propertyId")
+    fun getPhotos(propertyId: Int): Flow<List<PhotoEntity>>
 
     @Insert
     suspend fun addPhoto(photoEntity: PhotoEntity)
