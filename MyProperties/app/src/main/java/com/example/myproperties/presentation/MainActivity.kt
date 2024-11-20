@@ -17,6 +17,7 @@ import androidx.navigation.navArgument
 import com.example.myproperties.domain.model.Routes
 import com.example.myproperties.presentation.theme.MyPropertiesTheme
 import com.example.myproperties.presentation.ui.properties.add.AddPropertyView
+import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
 import com.example.myproperties.presentation.ui.properties.detail.PropertyDetailView
 import com.example.myproperties.presentation.ui.properties.list.PropertiesListView
 import com.example.myproperties.presentation.ui.properties.list.PropertiesListViewModel
@@ -26,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val propertiesListViewModel: PropertiesListViewModel by viewModels()
+    private val addPropertyViewModel: AddPropertyViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = Routes.PropertyList.route){
 
                         composable(route = Routes.PropertyList.route) {
-                            PropertiesListView(modifier = Modifier.padding(10.dp), navController)
+                            PropertiesListView(modifier = Modifier.padding(10.dp), navController, propertiesListViewModel)
                         }
 
                         composable(route = Routes.PropertyDetail.route,
@@ -50,7 +52,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Routes.AddProperty.route) {
-                            AddPropertyView(navController)
+                            AddPropertyView(navController, addPropertyViewModel)
                         }
                     }
                 }
