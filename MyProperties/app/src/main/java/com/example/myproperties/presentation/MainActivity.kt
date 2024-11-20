@@ -14,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.myproperties.domain.model.Routes
+import com.example.myproperties.domain.model.router.Routes
 import com.example.myproperties.infrastructure.utils.ManifestUtils
 import com.example.myproperties.presentation.theme.MyPropertiesTheme
 import com.example.myproperties.presentation.ui.maps.MapView
@@ -22,6 +22,7 @@ import com.example.myproperties.presentation.ui.maps.MapViewModel
 import com.example.myproperties.presentation.ui.properties.add.AddPropertyView
 import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
 import com.example.myproperties.presentation.ui.properties.detail.PropertyDetailView
+import com.example.myproperties.presentation.ui.properties.detail.PropertyDetailViewModel
 import com.example.myproperties.presentation.ui.properties.list.PropertiesListView
 import com.example.myproperties.presentation.ui.properties.list.PropertiesListViewModel
 import com.google.android.libraries.places.api.Places
@@ -33,6 +34,7 @@ class MainActivity : ComponentActivity() {
     private val propertiesListViewModel: PropertiesListViewModel by viewModels()
     private val addPropertyViewModel: AddPropertyViewModel by viewModels()
     private val mapViewModel: MapViewModel by viewModels()
+    private val propertyDetailViewModel: PropertyDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
 
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = Routes.Map.route){
+                    NavHost(navController = navController, startDestination = Routes.PropertyList.route){
 
                         composable(route = Routes.PropertyList.route) {
                             PropertiesListView(modifier = Modifier.padding(10.dp), navController, propertiesListViewModel)
@@ -61,7 +63,7 @@ class MainActivity : ComponentActivity() {
                             }
                         )) { backStackEntry ->
                             val propertyId = backStackEntry.arguments?.getString(Routes.PROPERTY_ID_KEY)
-                            PropertyDetailView(navController, propertyId ?: "")
+                            PropertyDetailView(navController, propertyId ?: "", propertyDetailViewModel)
                         }
 
                         composable(route = Routes.AddProperty.route) {
@@ -69,7 +71,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Routes.Map.route) {
-                            MapView(mapViewModel, context = this@MainActivity)
+                            MapView(mapViewModel, context = this@MainActivity, addPropertyViewModel)
                         }
                     }
                 }

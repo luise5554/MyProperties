@@ -21,7 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
-import com.example.myproperties.domain.model.Routes
+import com.example.myproperties.domain.model.router.Routes
 import androidx.compose.foundation.lazy.items
 
 @Composable

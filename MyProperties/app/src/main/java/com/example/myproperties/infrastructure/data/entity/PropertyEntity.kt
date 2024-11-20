@@ -15,8 +15,8 @@ data class PropertyEntity(
     val bathRoomsQuantity: Int,
     val title: String,
     val description: String,
-    val latitude: Long,
-    val longitude: Long
+    val latitude: Double,
+    val longitude: Double
 )
 
 fun PropertyEntity.toDomain(): PropertyModel{
@@ -24,7 +24,7 @@ fun PropertyEntity.toDomain(): PropertyModel{
         propertyId = propertyId,
         propertyType = propertyType,
         propertyTypeName = propertyTypeName,
-        maxRoomers = maxRoomers,
+        maxGuestsNumber = maxRoomers,
         bedsQuantity = bedsQuantity,
         bathRoomsQuantity = bathRoomsQuantity,
         title = title,
@@ -39,7 +39,7 @@ fun PropertyModel.toData(): PropertyEntity{
         propertyId = propertyId,
         propertyType = propertyType,
         propertyTypeName = propertyTypeName,
-        maxRoomers = maxRoomers,
+        maxRoomers = maxGuestsNumber,
         bedsQuantity = bedsQuantity,
         bathRoomsQuantity = bathRoomsQuantity,
         title = title,

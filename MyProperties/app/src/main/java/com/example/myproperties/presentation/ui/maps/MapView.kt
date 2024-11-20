@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.widget.addTextChangedListener
+import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
@@ -33,7 +34,11 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 
 @Composable
-fun MapView(mapViewModel: MapViewModel, context: Context) {
+fun MapView(
+    mapViewModel: MapViewModel,
+    context: Context,
+    addPropertyViewModel: AddPropertyViewModel
+) {
 
     val selectedLocation: LatLng by mapViewModel.selectedLocation.observeAsState(LatLng(10.4048386, -75.5572455))
 
@@ -73,13 +78,10 @@ fun MapView(mapViewModel: MapViewModel, context: Context) {
                 DragState.START -> {}
                 DragState.END -> {
                     mapViewModel.changeUserSelectedLocation(markerState.position)
+                    addPropertyViewModel.updateLatLong(markerState.position)
                 }
             }
-
         }
-
-
-
     }
 }
 

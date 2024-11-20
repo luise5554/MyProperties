@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mis Propiedades</string>
+    <string name="add_property_title">CREAR PROPIEDAD</string>
+    <string name="property_list_title">LISTA DE PROPIEDADES</string>
+    <string name="select_location">Ingresar Ubicación</string>
+    <string name="change_location">Cambiar Ubicación</string>
+    <string name="title">Título</string>
+    <string name="guests_number">Máximo de huéspedes</string>
+    <string name="beds_in_property">Camas en la propiedad</string>
+    <string name="bathrooms_in_property">Baños en la propiedad</string>
+    <string name="property_type">Tipo de propiedad</string>
+    <string name="description">Descripción</string>
+
+    <string name="property_type_apartment">Apartmento</string>
+    <string name="property_type_house">Casa</string>
+    <string name="property_type_penthouse">Penthouse</string>
+    <string name="property_type_condominium">Condominio</string>
+
+    <string name="save">GUARDAR</string>
+
+    <string name="emtpy_property_type_error">Debes seleccionar un tipo de propiedad.</string>
+    <string name="emtpy_property_description">Debes ingresar una descripción</string>
+    <string name="emtpy_property_title">Debes ingresar un título</string>
+    <string name="emtpy_property_max_guests_number">Debes ingresar el máximo de huéspedes</string>
+    <string name="emtpy_property_beds_number">Debes ingresar el número de camas</string>
+    <string name="emtpy_property_bathrooms_number">Debes ingresar el número de baños</string>
+    <string name="emtpy_property_location">Debes ingresar la ubicación</string>
+
+    <string name="success">La propiedad fue almacenada exitosamente</string>
+
+    <string name="title_error_dialog">Oops!!!</string>
+    <string name="accept">Aceptar</string>
+</resources>

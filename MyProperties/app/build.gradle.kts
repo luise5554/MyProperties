@@ -92,6 +92,7 @@ dependencies {
 
     // Google maps Compose
     implementation(libs.maps.compose)
+    implementation("io.coil-kt:coil-compose:2.7.0")
 }
 
 // Allow references to generated code

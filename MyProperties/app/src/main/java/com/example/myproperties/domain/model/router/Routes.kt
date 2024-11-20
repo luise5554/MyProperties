@@ -1,4 +1,4 @@
-package com.example.myproperties.domain.model
+package com.example.myproperties.domain.model.router
 
 sealed class Routes(val route:String) {
 
@@ -7,7 +7,7 @@ sealed class Routes(val route:String) {
     }
 
     data object PropertyList: Routes(route = "PropertyList")
-    data object PropertyDetail: Routes(route = "PropertyDetail/{${PROPERTY_ID_KEY}}"){
+    data object PropertyDetail: Routes(route = "PropertyDetail/{$PROPERTY_ID_KEY}"){
         fun createRoute(propertyId: String) = "PropertyDetail/$propertyId"
     }
     data object AddProperty: Routes(route = "AddProperty")

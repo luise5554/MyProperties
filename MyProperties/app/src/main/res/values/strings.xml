@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">MyProperties</string>
+    <string name="add_property_title">CREATE PROPERTY</string>
+    <string name="property_list_title">PROPERTIES LIST</string>
+    <string name="select_location">Enter Location</string>
+    <string name="change_location">Change Location</string>
+    <string name="title">Title</string>
+    <string name="guests_number">Maximum of Guests</string>
+    <string name="beds_in_property">Beds in the property</string>
+    <string name="bathrooms_in_property">Bathrooms in the property</string>
+    <string name="property_type">Property Type</string>
+    <string name="description">Description</string>
+
+    <string name="property_type_apartment">Apartment</string>
+    <string name="property_type_house">House</string>
+    <string name="property_type_penthouse">Penthouse</string>
+    <string name="property_type_condominium">Condominium</string>
+
+    <string name="save">SAVE</string>
+
+    <string name="emtpy_property_type_error">You must select a property type.</string>
+    <string name="emtpy_property_description">Debes ingresar una descripción</string>
+    <string name="emtpy_property_title">You must enter a description</string>
+    <string name="emtpy_property_max_guests_number">Debes ingresar el máximo de invitados</string>
+    <string name="emtpy_property_beds_number">You must enter the maximum number of guests</string>
+    <string name="emtpy_property_bathrooms_number">You must enter the number of bathrooms</string>
+    <string name="emtpy_property_location">You must enter the location</string>
+
+    <string name="success">The property was successfully stored</string>
+
+    <string name="title_error_dialog">Oops!!!</string>
+    <string name="accept">Accept</string>
+
 </resources>
