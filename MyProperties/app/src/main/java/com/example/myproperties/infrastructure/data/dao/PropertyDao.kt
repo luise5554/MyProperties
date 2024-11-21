@@ -15,4 +15,7 @@ interface PropertyDao {
     @Insert
     suspend fun addProperty(property: PropertyEntity)
 
+    @Query("Select * from PropertyEntity where propertyId = :propertyId")
+    fun getPropertyById(propertyId: Int): PropertyEntity
+
 }

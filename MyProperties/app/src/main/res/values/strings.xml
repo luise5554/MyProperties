@@ -32,4 +32,12 @@
     <string name="title_error_dialog">Oops!!!</string>
     <string name="accept">Accept</string>
 
+    <string name="title_label">Title:</string>
+    <string name="type_label">Type:</string>
+    <string name="guests_label">Guests:</string>
+    <string name="beds_label">Beds:</string>
+    <string name="bathrooms_label">Bathrooms:</string>
+    <string name="description_label">Description:</string>
+    <string name="photos_label">Photos:</string>
+
 </resources>

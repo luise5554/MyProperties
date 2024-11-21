@@ -41,9 +41,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Retrieve the API key from the manifest file
         val apiKey = ManifestUtils.getApiKeyFromManifest(this)
-        // Initialize the Places API with the retrieved API key
         if (!Places.isInitialized() && apiKey != null) {
             Places.initialize(applicationContext, apiKey)
         }
@@ -75,7 +73,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(route = Routes.AddProperty.route) {
-                        AddPropertyView(navController, addPropertyViewModel)
+                        AddPropertyView(navController, addPropertyViewModel, context = this@MainActivity)
                     }
 
                     composable(route = Routes.Map.route) {

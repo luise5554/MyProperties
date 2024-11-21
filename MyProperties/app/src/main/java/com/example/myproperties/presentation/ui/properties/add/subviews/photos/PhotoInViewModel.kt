@@ -10,10 +10,10 @@ data class PhotoInViewModel(
     val index: Int
 )
 
-fun PhotoInViewModel.toPhotoModel(propertyId: Int): PhotoModel{
+fun PhotoInViewModel.toPhotoModel(propertyId: Int, newUriString: String): PhotoModel{
     return PhotoModel(
         propertyId = propertyId,
-        localPath= uri?.path ?: "",
+        localPath= newUriString,
         photoDescription = "",
         order= index
     )

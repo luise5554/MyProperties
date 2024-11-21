@@ -1,5 +1,6 @@
 package com.example.myproperties.presentation.ui.properties.add.subviews.photos
 
+import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -173,7 +174,7 @@ fun PhotoChooserView(addPropertyViewModel: AddPropertyViewModel) {
                 } else {
                     Modifier
                 }
-                Item(
+                PhotoItem(
                     modifier = modifier
                         .height(100.dp)
                         .width(100.dp),
@@ -187,7 +188,7 @@ fun PhotoChooserView(addPropertyViewModel: AddPropertyViewModel) {
 
 
 @Composable
-private fun Item(modifier: Modifier = Modifier, photoInViewModel: PhotoInViewModel) {
+private fun PhotoItem(modifier: Modifier = Modifier, photoInViewModel: PhotoInViewModel) {
     Card(
         modifier = modifier
     ) {

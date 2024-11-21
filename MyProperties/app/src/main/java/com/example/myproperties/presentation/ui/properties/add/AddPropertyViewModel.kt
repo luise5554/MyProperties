@@ -1,10 +1,13 @@
 package com.example.myproperties.presentation.ui.properties.add
 
+import android.content.Context
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.example.myproperties.domain.model.PhotoModel
 import com.example.myproperties.domain.model.rules.PropertyInfoValidationModel
 import com.example.myproperties.domain.model.PropertyModel
 import com.example.myproperties.domain.rules.NumberRuleValidatorInterface
@@ -15,6 +18,7 @@ import com.example.myproperties.presentation.ui.properties.add.subviews.photos.P
 import com.example.myproperties.presentation.ui.properties.add.subviews.photos.toPhotoModel
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +27,8 @@ class AddPropertyViewModel @Inject constructor(
     private val addPropertyUseCase: AddPropertyUseCase,
     private val addPhotosForPropertyUseCase: AddPhotosForPropertyUseCase,
     private val isNumberValidator: NumberRuleValidatorInterface,
-    private val propertyInfoValidator: PropertyInfoValidatorInterface
+    private val propertyInfoValidator: PropertyInfoValidatorInterface,
+    @ApplicationContext private val  context: Context
 ) : ViewModel() {
 
     private var _latitude = MutableLiveData<Double?>()
@@ -56,14 +61,17 @@ class AddPropertyViewModel @Inject constructor(
     private val _expandPropertyTypeDropdownMenu = MutableLiveData(false)
     var expandPropertyTypeDropdownMenu: LiveData<Boolean> = _expandPropertyTypeDropdownMenu
 
-    private var _errorMessage = MutableLiveData<String>("")
+    private var _errorMessage = MutableLiveData("")
     val errorMessage: LiveData<String> = _errorMessage
 
-    private var _showError = MutableLiveData<Boolean>(false)
+    private var _showError = MutableLiveData(false)
     val showError: LiveData<Boolean> = _showError
 
     private var _photoList = MutableLiveData<List<PhotoInViewModel>>(emptyList())
     var photoList: LiveData<List<PhotoInViewModel>> = _photoList
+
+    private var _isSavingInfo = MutableLiveData(false)
+    val isSavingInfo: LiveData<Boolean> = _isSavingInfo
 
     fun updateLatLong(latLng: LatLng) {
         _latitude.value = latLng.latitude
@@ -117,43 +125,64 @@ class AddPropertyViewModel @Inject constructor(
     }
 
     fun addProperty() {
+        viewModelScope.launch {
 
-        val validation = propertyInfoValidator.validateInfo(
-            propertyType = propertyTypeId.value,
-            propertyTypeName = propertyTypeName.value,
-            maxGuestNumber = maxGuestsNumber.value,
-            bedsQuantity = bedsInProperty.value,
-            bathRoomsQuantity = bathroomsInProperty.value,
-            title = title.value,
-            description = description.value,
-            latitude = latitude.value,
-            longitude = longitude.value,
-            listPhotos = photoList.value
-        )
+            _isSavingInfo.value = true
 
-        if (validation == PropertyInfoValidationModel.SUCCESS_VALIDATION){
-            val propertyModel = PropertyModel(
-                propertyType = propertyTypeId.value!!.toInt(),
-                propertyTypeName = propertyTypeName.value!!,
-                maxGuestsNumber = maxGuestsNumber.value!!.toInt(),
-                bedsQuantity = bedsInProperty.value!!.toInt(),
-                bathRoomsQuantity = bathroomsInProperty.value!!.toInt(),
-                title = title.value!!,
-                description = description.value!!,
-                latitude = latitude.value!!,
-                longitude = longitude.value!!,
+            val validation = propertyInfoValidator.validateInfo(
+                propertyType = propertyTypeId.value,
+                propertyTypeName = propertyTypeName.value,
+                maxGuestNumber = maxGuestsNumber.value,
+                bedsQuantity = bedsInProperty.value,
+                bathRoomsQuantity = bathroomsInProperty.value,
+                title = title.value,
+                description = description.value,
+                latitude = latitude.value,
+                longitude = longitude.value,
+                listPhotos = photoList.value
             )
-            viewModelScope.launch {
-                addPropertyUseCase(propertyModel = propertyModel)
 
-                val listPhotoModel = photoList.value!!.map { photoInViewModel ->
-                    photoInViewModel.toPhotoModel(propertyId= propertyModel.propertyId)
-                }
-                addPhotosForPropertyUseCase(listPhotoModel)
+            if (validation == PropertyInfoValidationModel.SUCCESS_VALIDATION){
+                val propertyModel = PropertyModel(
+                    propertyType = propertyTypeId.value!!.toInt(),
+                    propertyTypeName = propertyTypeName.value!!,
+                    maxGuestsNumber = maxGuestsNumber.value!!.toInt(),
+                    bedsQuantity = bedsInProperty.value!!.toInt(),
+                    bathRoomsQuantity = bathroomsInProperty.value!!.toInt(),
+                    title = title.value!!,
+                    description = description.value!!,
+                    latitude = latitude.value!!,
+                    longitude = longitude.value!!,
+                )
+
+                    addPropertyUseCase(propertyModel = propertyModel)
+
+                    val newList: MutableList<PhotoModel> = arrayListOf()
+                    val baseId = System.currentTimeMillis().hashCode()
+
+                    photoList.value?.forEach { photoInViewModel ->
+
+                        val idForPath = photoInViewModel.index + baseId
+                        val input = context.contentResolver.openInputStream(photoInViewModel.uri!!)
+                        val outputFile = context.filesDir.resolve("${propertyModel.propertyId}_${idForPath}_photo.jpg")
+                        input?.copyTo(outputFile.outputStream())
+                        val newUri = outputFile.toUri()
+
+                        if (newUri.path != null){
+                            val photoIn = photoInViewModel.toPhotoModel(propertyId= propertyModel.propertyId, newUriString= newUri.path!!)
+                            newList.add(photoIn)
+                        }
+                    }
+
+                    addPhotosForPropertyUseCase(newList)
+            }else{
+                _errorMessage.value = propertyInfoValidator.mapValidationToMessage(validation)
+                _showError.value = true
             }
-        }else{
-            _errorMessage.value = propertyInfoValidator.mapValidationToMessage(validation)
-            _showError.value = true
+
+            _isSavingInfo.value = false
+
         }
+
     }
 }

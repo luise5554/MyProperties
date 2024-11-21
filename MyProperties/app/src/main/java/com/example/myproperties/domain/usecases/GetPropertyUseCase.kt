@@ -13,4 +13,8 @@ class GetPropertyUseCase @Inject constructor(
         return propertyRepository.properties
     }
 
+    suspend fun getPropertyBy(propertyId: Int): PropertyModel{
+        return propertyRepository.getPropertyById(propertyId = propertyId)
+    }
+
 }

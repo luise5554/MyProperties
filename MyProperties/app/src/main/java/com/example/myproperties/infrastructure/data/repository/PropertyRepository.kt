@@ -20,4 +20,8 @@ class PropertyRepository @Inject constructor(private val propertyDao: PropertyDa
         propertyDao.addProperty(propertyModel.toData())
     }
 
+    suspend fun getPropertyById(propertyId: Int): PropertyModel{
+        return propertyDao.getPropertyById(propertyId = propertyId).toDomain()
+    }
+
 }
