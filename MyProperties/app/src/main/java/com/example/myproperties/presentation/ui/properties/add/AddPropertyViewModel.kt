@@ -129,9 +129,6 @@ class AddPropertyViewModel @Inject constructor(
 
     fun addProperty() {
         viewModelScope.launch {
-
-            _isSavingInfo.value = true
-
             val validation = propertyInfoValidator.validateInfo(
                 propertyType = propertyTypeId.value,
                 propertyTypeName = propertyTypeName.value,
@@ -146,6 +143,9 @@ class AddPropertyViewModel @Inject constructor(
             )
 
             if (validation == PropertyInfoValidationModel.SUCCESS_VALIDATION){
+
+                _isSavingInfo.value = true
+
                 val propertyModel = PropertyModel(
                     propertyType = propertyTypeId.value!!.toInt(),
                     propertyTypeName = propertyTypeName.value!!,
@@ -178,13 +178,14 @@ class AddPropertyViewModel @Inject constructor(
                     }
 
                     addPhotosForPropertyUseCase(newList)
+
+                    _isSavingInfo.value = false
+                    _showSuccessDialgo.value = true
+
             }else{
                 _errorMessage.value = propertyInfoValidator.mapValidationToMessage(validation)
                 _showError.value = true
             }
-
-            _isSavingInfo.value = false
-            _showSuccessDialgo.value = true
 
         }
 

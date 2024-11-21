@@ -58,7 +58,7 @@ class PropertyInfoValidator(val context: Context): PropertyInfoValidatorInterfac
             return PropertyInfoValidationModel.EMPTY_LOCATION
         }
 
-        if (listPhotos.isNullOrEmpty()){
+        if (listPhotos.isNullOrEmpty() || listPhotos.count() < 5){
             return PropertyInfoValidationModel.EMPTY_OR_NOT_ENOUGH_PHOTOS_LIST
         }
 
