@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(route = Routes.AddProperty.route) {
-                        AddPropertyView(navController, addPropertyViewModel, context = this@MainActivity)
+                        AddPropertyView(navController, addPropertyViewModel)
                     }
 
                     composable(route = Routes.Map.route) {

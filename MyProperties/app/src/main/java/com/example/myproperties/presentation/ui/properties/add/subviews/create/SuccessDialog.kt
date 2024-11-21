@@ -12,27 +12,29 @@ import com.example.myproperties.R
 import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
 
 @Composable
-fun MessageErrorDialog(addPropertyViewModel: AddPropertyViewModel) {
+fun SuccessDialog(addPropertyViewModel: AddPropertyViewModel, navHostController: NavHostController) {
 
-    val showError: Boolean by addPropertyViewModel.showError.observeAsState(false)
+    val showSuccessDialog: Boolean by addPropertyViewModel.showSuccessDialgo.observeAsState(false)
 
-    if (showError){
+    if (showSuccessDialog){
         AlertDialog(
             onDismissRequest = {
                 addPropertyViewModel.changeVisibilityDialogState(false)
             },
             confirmButton = {
-                TextButton(onClick = { addPropertyViewModel.changeVisibilityDialogState(false) }) {
+                TextButton(onClick = {
+                    navHostController.popBackStack()
+                }) {
                     Text(text = stringResource(id = R.string.accept))
                 }
             },
             title = {
                 Text(
-                    text = stringResource(id = R.string.title_error_dialog)
+                    text = stringResource(id = R.string.title_success_dialog)
                 )
             },
             text = {
-                Text(text = addPropertyViewModel.errorMessage.value!!)
+                Text(text = stringResource(id = R.string.message_success_dialog))
             }
         )
     }

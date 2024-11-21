@@ -1,6 +1,5 @@
 package com.example.myproperties.presentation.ui.properties.add
 
-import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +31,7 @@ import com.example.myproperties.presentation.ui.properties.add.subviews.create.M
 import com.example.myproperties.presentation.ui.properties.add.subviews.create.MessageErrorDialog
 import com.example.myproperties.presentation.ui.properties.add.subviews.create.PreviewLocationView
 import com.example.myproperties.presentation.ui.properties.add.subviews.create.PropertyTypeField
+import com.example.myproperties.presentation.ui.properties.add.subviews.create.SuccessDialog
 import com.example.myproperties.presentation.ui.properties.add.subviews.create.TitleTextField
 import com.example.myproperties.presentation.ui.properties.add.subviews.photos.PhotoChooserView
 
@@ -39,8 +39,7 @@ import com.example.myproperties.presentation.ui.properties.add.subviews.photos.P
 @Composable
 fun AddPropertyView(
     navController: NavHostController,
-    addPropertyViewModel: AddPropertyViewModel,
-    context: Context
+    addPropertyViewModel: AddPropertyViewModel
 ) {
 
     val savingInfo: Boolean by addPropertyViewModel.isSavingInfo.observeAsState(true)
@@ -106,6 +105,7 @@ fun AddPropertyView(
         }
 
         MessageErrorDialog(addPropertyViewModel = addPropertyViewModel)
+        SuccessDialog(addPropertyViewModel, navController)
     }
 
 

@@ -73,6 +73,9 @@ class AddPropertyViewModel @Inject constructor(
     private var _isSavingInfo = MutableLiveData(false)
     val isSavingInfo: LiveData<Boolean> = _isSavingInfo
 
+    private var _showSuccessDialgo = MutableLiveData(false)
+    val showSuccessDialgo: LiveData<Boolean> = _showSuccessDialgo
+
     fun updateLatLong(latLng: LatLng) {
         _latitude.value = latLng.latitude
         _longitude.value = latLng.longitude
@@ -181,6 +184,7 @@ class AddPropertyViewModel @Inject constructor(
             }
 
             _isSavingInfo.value = false
+            _showSuccessDialgo.value = true
 
         }
 

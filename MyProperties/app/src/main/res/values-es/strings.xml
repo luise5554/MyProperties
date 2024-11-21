@@ -31,6 +31,8 @@
     <string name="success">La propiedad fue almacenada exitosamente</string>
 
     <string name="title_error_dialog">Oops!!!</string>
+    <string name="title_success_dialog">Genial!!!</string>
+    <string name="message_success_dialog">La información ha sido guardada exitosamente</string>
     <string name="accept">Aceptar</string>
 
     <string name="title_label">Title:</string>

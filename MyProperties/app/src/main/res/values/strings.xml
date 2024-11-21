@@ -30,6 +30,9 @@
     <string name="success">The property was successfully stored</string>
 
     <string name="title_error_dialog">Oops!!!</string>
+    <string name="title_success_dialog">Great!!!</string>
+    <string name="message_success_dialog">The information has been saved successfully</string>
+
     <string name="accept">Accept</string>
 
     <string name="title_label">Title:</string>
