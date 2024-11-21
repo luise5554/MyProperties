@@ -19,7 +19,7 @@ fun SuccessDialog(addPropertyViewModel: AddPropertyViewModel, navHostController:
     if (showSuccessDialog){
         AlertDialog(
             onDismissRequest = {
-                addPropertyViewModel.changeVisibilityDialogState(false)
+                addPropertyViewModel.changeVisibilitySuccessDialogState(false)
             },
             confirmButton = {
                 TextButton(onClick = {

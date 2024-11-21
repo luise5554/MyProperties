@@ -123,6 +123,10 @@ class AddPropertyViewModel @Inject constructor(
         _showError.value = boolean
     }
 
+    fun changeVisibilitySuccessDialogState(boolean: Boolean) {
+        _showSuccessDialgo.value = boolean
+    }
+
     fun updatePhotoList(photoList: List<PhotoInViewModel>) {
         _photoList.value = photoList
     }
