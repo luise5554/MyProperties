@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = Routes.PropertyList.route){
 
                     composable(route = Routes.PropertyList.route) {
-                        PropertiesListView(modifier = Modifier.padding(10.dp), navController, propertiesListViewModel)
+                        PropertiesListView(modifier = Modifier.padding(10.dp), navController, propertiesListViewModel, addPropertyViewModel)
                     }
 
                     composable(route = Routes.PropertyDetail.route,

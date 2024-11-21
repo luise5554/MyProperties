@@ -34,9 +34,10 @@ import androidx.navigation.NavHostController
 import com.example.myproperties.R
 import com.example.myproperties.domain.model.PropertyModel
 import com.example.myproperties.domain.model.router.Routes
+import com.example.myproperties.presentation.ui.properties.add.AddPropertyViewModel
 
 @Composable
-fun PropertiesListView(modifier: Modifier, navController: NavHostController, propertiesListViewModel: PropertiesListViewModel) {
+fun PropertiesListView(modifier: Modifier, navController: NavHostController, propertiesListViewModel: PropertiesListViewModel, addPropertyViewModel: AddPropertyViewModel) {
 
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 
@@ -82,6 +83,7 @@ fun PropertiesListView(modifier: Modifier, navController: NavHostController, pro
 
                 FloatingActionButton(
                     onClick = {
+                        addPropertyViewModel.changeVisibilitySuccessDialogState(false)
                         navController.navigate(Routes.AddProperty.route)
                     },
                     modifier = Modifier
